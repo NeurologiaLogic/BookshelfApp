@@ -16,7 +16,7 @@ document.addEventListener('DOMContentLoaded', ()=>{
     const completeBookshelfList = document.querySelector("#completeBookshelfList");
     const searchBookTitle = document.querySelector("#searchBookTitle");
     const searchSubmit = document.querySelector("#searchSubmit");
-    const visible = document.querySelector("#visible");
+    // const visible = document.querySelector("#visible");
     const status = document.querySelector("#status");
     const STORAGE_KEY = "bookshelf"
     const REFRESH_DATA = "refresh"
@@ -60,10 +60,10 @@ document.addEventListener('DOMContentLoaded', ()=>{
         {
           data.splice(index, 1);
           localStorage.setItem(STORAGE_KEY, JSON.stringify(data))
-          visible.innerText = `Buku ${dataToBeDeleted.title} berhasil di hapus`
+          // visible.innerText = `Buku ${dataToBeDeleted.title} berhasil di hapus`
 
-          visible.style.top=`20%`;
-          setTimeout(() =>visible.style.top="-100px",2000)
+          // visible.style.top=`20%`;
+          // setTimeout(() =>visible.style.top="-100px",2000)
         }
     }
 
