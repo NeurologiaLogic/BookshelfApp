@@ -95,11 +95,38 @@ main {
     border: 1px solid black;
     border-radius: 10px;
 }
+#searchBook
+{
+    display:flex;
+    flex-wrap: wrap;
+}
+.blue
+{
+    color:cornflowerblue;
+}
+.bold
+{
+    font-weight: bold;
+}
+#searchBookTitle{
+    width:100%;
+}
 
+#searchSubmit
+{
+    padding:0.5rem 1rem;
+    width:100%;
+
+}
 .search_section > h2 {
     color: cornflowerblue;
 }
-
+article
+{
+    display:flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+}
 .search_section > form {
     padding: 16px;
     width: 100%;
@@ -151,7 +178,12 @@ main {
 .book_shelf > .book_list > .book_item > h3, p {
     margin: 8px 0;
 }
-
+.book_shelf > .book_list > .book_item > .action
+{
+    display:flex;
+    flex-wrap: wrap;
+    gap:.5rem;
+}
 .book_shelf > .book_list > .book_item > .action > button {
     border: 0;
     padding: 5px;
@@ -160,13 +192,22 @@ main {
     cursor: pointer;
 }
 
+.book_shelf > .book_list > .book_item > .action > .green:hover{
+    background-color: rgb(9, 136, 104);
+    color: white;
+}
 .book_shelf > .book_list > .book_item > .action > .green {
     background-color: darkgreen;
     color: white;
+    transition: all 0.5s ease-out;
 }
-
 .book_shelf > .book_list > .book_item > .action > .red {
     background-color: darkred;
+    color: white;
+    transition: all 0.5s ease-out;
+}
+.book_shelf > .book_list > .book_item > .action > .red:hover{
+    background-color: rgb(206, 7, 7);
     color: white;
 }
 #visible

@@ -85,17 +85,52 @@ document.addEventListener('DOMContentLoaded', ()=>{
       action.classList.add("action")
       let button1 = document.createElement("button")
       button1.classList.add("green")
-      button1.innerText = "Selesai dibaca"
+      button1.innerHTML = '<i class="fa fa-check-circle" aria-hidden="true"></i> Sudah Dibaca'
       let button2 = document.createElement("button")
       button2.classList.add("red")
-      button2.innerText = "Hapus Buku"
+      button2.innerHTML = '<i class="fa fa-trash" aria-hidden="true"></i> Hapus Buku'
       button1.addEventListener("click",()=>{
-        isCompleteSwitch(data)
-        document.dispatchEvent(new Event(REFRESH_DATA))
+        Swal.fire({
+          title: 'Memindahkan buku',
+          text:'Memindahkan buku ke rak selesai dibaca',
+          icon: 'question',
+          showCancelButton: true,
+          confirmButtonColor: '#3085d6',
+          cancelButtonColor: '#d33',
+          confirmButtonText: 'Ya, pindahkan!'
+        }).then((result) => {
+          if (result.isConfirmed) {
+            Swal.fire(
+              'Buku berhasil di pindahkan!',
+              `Buku ${data.title} sekarang ada di rak selesai dibaca`,
+              'success'
+            )
+            isCompleteSwitch(data)
+            document.dispatchEvent(new Event(REFRESH_DATA))
+          }
+        })
       })
       button2.addEventListener("click",()=>{
-        deleteBook(data);
-        document.dispatchEvent(new Event(REFRESH_DATA))
+        console.log("deleted")
+        Swal.fire({
+          title: 'Are you sure?',
+          text: "You won't be able to revert this!",
+          icon: 'warning',
+          showCancelButton: true,
+          confirmButtonColor: '#3085d6',
+          cancelButtonColor: '#d33',
+          confirmButtonText: 'Yes, delete it!'
+        }).then((result) => {
+          if (result.isConfirmed) {
+            Swal.fire(
+              'Deleted!',
+              'Your file has been deleted.',
+              'success'
+              )
+              deleteBook(data);
+              document.dispatchEvent(new Event(REFRESH_DATA))
+            }
+        })
       })
       action.append(button1,button2)
       book_item.append(title,author,year,action)
@@ -115,20 +150,91 @@ document.addEventListener('DOMContentLoaded', ()=>{
       action.classList.add("action")
       let button1 = document.createElement("button")
       button1.classList.add("green")
-      button1.innerText = "Belum selesai di Baca"
+      button1.innerHTML = '<i class="fa fa-check-circle" aria-hidden="true"></i> Belum Selesai Dibaca'
       let button2 = document.createElement("button")
       button2.classList.add("red")
-      button2.innerText = "Hapus Buku"
-      action.append(button1,button2)
+      button2.innerHTML = '<i class="fa fa-pencil-square" aria-hidden="true"></i>      Edit Buku'
+      let button3 = document.createElement("button")
+      button3.classList.add("red")
+      button3.innerHTML = '<i class="fa fa-trash" aria-hidden="true"></i> Hapus Buku'
+      action.append(button1,button3)
 
       button1.addEventListener("click",()=>{
-        isCompleteSwitch(data)
-        document.dispatchEvent(new Event(REFRESH_DATA))
+        Swal.fire({
+          title: 'Memindahkan buku',
+          text:'Memindahkan buku ke rak belum selesai dibaca',
+          icon: 'question',
+          showCancelButton: true,
+          confirmButtonColor: '#3085d6',
+          cancelButtonColor: '#d33',
+          confirmButtonText: 'Ya, pindahkan!'
+        }).then((result) => {
+          if (result.isConfirmed) {
+            Swal.fire(
+              'Buku berhasil di pindahkan!',
+              `Buku ${data.title} sekarang ada di rak belum selesai dibaca`,
+              'success'
+            )
+            isCompleteSwitch(data)
+            document.dispatchEvent(new Event(REFRESH_DATA))
+          }
+        })
       })
       button2.addEventListener("click",()=>{
+          Swal.fire({
+            title: 'Submit your Github username',
+            input: 'text',
+            inputAttributes: {
+              autocapitalize: 'off'
+            },
+            showCancelButton: true,
+            confirmButtonText: 'Look up',
+            showLoaderOnConfirm: true,
+            preConfirm: (login) => {
+              return fetch(`//api.github.com/users/${login}`)
+                .then(response => {
+                  if (!response.ok) {
+                    throw new Error(response.statusText)
+                  }
+                  return response.json()
+                })
+                .catch(error => {
+                  Swal.showValidationMessage(
+                    `Request failed: ${error}`
+                  )
+                })
+            },
+            allowOutsideClick: () => !Swal.isLoading()
+          }).then((result) => {
+            if (result.isConfirmed) {
+              Swal.fire({
+                title: `${result.value.login}'s avatar`,
+                imageUrl: result.value.avatar_url
+              })
+            }
+          })
+        })
+        button3.addEventListener("click",()=>{
+          Swal.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it!'
+          }).then((result) => {
+            if (result.isConfirmed) {
+              Swal.fire(
+                'Deleted!',
+                'Your file has been deleted.',
+                'success'
+                )
+                deleteBook(data);
+                document.dispatchEvent(new Event(REFRESH_DATA))
+              }
+          })
         console.log("deleted")
-        deleteBook(data);
-        document.dispatchEvent(new Event(REFRESH_DATA))
       })
       book_item.append(title,author,year,action)
       book_item.setAttribute("id",data.id)
