@@ -275,8 +275,10 @@ document.addEventListener('DOMContentLoaded', () => {
     //add data
     let data = getDataFromStorage()
     for (let i of data) {
-      if (searchValue != null && i.title.startsWith(searchValue))
+      if (i.title.startsWith(searchValue))
+      {
         markCompleteOrIncomplete(i)
+      }
     }
   })
 
