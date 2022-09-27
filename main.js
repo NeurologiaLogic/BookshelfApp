@@ -274,6 +274,13 @@ document.addEventListener('DOMContentLoaded', ()=>{
       addDataToStorage(newBook)
     })
 
+    const markCompleteOrIncomplete = (data)=>{
+      if(data.isComplete)
+        finishedBook(data)
+      else
+        unfinishedBook(data)
+    }
+
     document.addEventListener(REFRESH_DATA,()=>{
       console.log("refreshed")
       incompleteBookshelfList.innerHTML = "";
@@ -282,26 +289,10 @@ document.addEventListener('DOMContentLoaded', ()=>{
       let data = getDataFromStorage()
       for(let i of data)
       {
-        if(searchValue!=null)
-        {
-          if(i.title.startsWith(searchValue))
-          {
-            if(i.isComplete)
-              finishedBook(i)
-            else
-              unfinishedBook(i)
-            }
-        }
-        else
-        {
-          if(i.isComplete)
-            finishedBook(i)
-          else
-            unfinishedBook(i)
-        }
+        if(searchValue!=null&&i.title.startsWith(searchValue))
+          markCompleteOrIncomplete(i)
       }
-    }
-    )
+    })
 
     //belum dibaca isComplete = false
     //selesai dibaca isComplete = true

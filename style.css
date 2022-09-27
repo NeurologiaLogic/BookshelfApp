@@ -176,7 +176,10 @@ article
 }
 
 .book_shelf > .book_list > .book_item > h3, p {
-    margin: 8px 0;
+    margin: 4px 0;
+}
+.book_shelf > .book_list > .book_item > p:nth-child(3){
+    margin: 4px 0 8px;
 }
 .book_shelf > .book_list > .book_item > .action
 {
